@@ -14,7 +14,7 @@ SoftwareSerial softwareSerial(PIN_MP3_RX, PIN_MP3_TX);
 DFRobotDFPlayerMini player;
 
 
-mp3Setup() {
+void mp3Setup() {
 
   // Init serial port for DFPlayer Mini
   softwareSerial.begin(9600);
@@ -88,7 +88,7 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 
 Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 
-tftSetup() {
+void tftSetup() {
 
 
   tft.reset();                         //Shield launching
@@ -132,7 +132,7 @@ SevSeg sevseg;
 // Value for storing water level
 int val = 0;
 
-sevenSegmentSetup() {
+void sevenSegmentSetup() {
   byte numDigits = 1;
   byte digitPins[] = {};
   byte segmentPins[] = {22, 23, 24, 25, 26, 27, 28, 29};
@@ -150,7 +150,7 @@ int angle = 10;
 int rainPin = A9;
 int thresholdValue = 800;
 
-servoSetup() {
+void servoSetup() {
 
   //servo and rain
   pinMode(rainPin, INPUT);
@@ -168,7 +168,7 @@ void setup(void) {
   pinMode(sensorPower, OUTPUT);
   digitalWrite(sensorPower, LOW);
 
-  mp3SetupservoSetup();
+  mp3Setup();
   tftSetup();
   sevenSegmentSetup(); //level sensor and seven segments
   servoSetup(); //servo and rain
