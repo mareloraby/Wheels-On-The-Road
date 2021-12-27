@@ -42,41 +42,15 @@ void setup() {
   pinMode(in2, OUTPUT);
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
-
-
   pinMode(buzzer, OUTPUT);
   pinMode(trigger_pin, OUTPUT);
   pinMode(echo_pin, INPUT);
-
   pinMode(trigger_pin2, OUTPUT);
   pinMode(echo_pin2, INPUT);
 
   Serial.begin(9600);
 }
 
-void methodfrominternet(){
-  
-      if (distance2 > -1 && distance2 < 10) {
-      turnoffMotors();
-      delay(1000);
-    BothBack();
-      delay(300);
-      turnoffMotors();
-      delay(1000);
-  
-//      if (random(0, 2) == 0) {
-//        turnAForwardandBBackward();
-//      } else {
-        turnBForwardandABackward();
-//      }
-  
-      delay(500);
-      turnoffMotors();
-      delay(700);
-    } else {
-      BothForward();
-    }
-  }
 
 void turnBForwardandABackward()
 
@@ -120,8 +94,7 @@ void turnAForwardandBBackward()
 void turnoffMotors() {
   analogWrite(enA, 0);
   analogWrite(enB, 0);
-
-
+  
   digitalWrite(in1, LOW);
   digitalWrite(in2, LOW);
   digitalWrite(in3, LOW);
@@ -178,30 +151,30 @@ void ultrasonic1() {
 
 
 
-    if (distance <= 7 && distance> 0)
-    {
-      tone(buzzer, tn);
-    }
-  
-    else if (distance <= 13)
-    {
-      tone(buzzer, tn);
-      delay(50);
-      noTone(buzzer);
-      delay(250);
-    }
-  
-    else if (distance <= 20)
-    {
-      tone(buzzer, tn);
-      delay(50);
-      noTone(buzzer);
-      delay(500);
-    }
-    else
-    {
-      noTone(buzzer);
-    }
+  if (distance <= 7 && distance > 0)
+  {
+    tone(buzzer, tn);
+  }
+
+  else if (distance <= 13)
+  {
+    tone(buzzer, tn);
+    delay(50);
+    noTone(buzzer);
+    delay(250);
+  }
+
+  else if (distance <= 20)
+  {
+    tone(buzzer, tn);
+    delay(50);
+    noTone(buzzer);
+    delay(500);
+  }
+  else
+  {
+    noTone(buzzer);
+  }
 }
 
 
@@ -216,30 +189,30 @@ void ultrasonic2() {
   Serial.println(distance2);
 
 
-    if (distance2 <= 7 && distance2> 0)
-    {
-      tone(buzzer, tn);
-    }
-  
-    else if (distance2 <= 13)
-    {
-      tone(buzzer, tn);
-      delay(50);
-      noTone(buzzer);
-      delay(250);
-    }
-  
-    else if (distance2 <= 20)
-    {
-      tone(buzzer, tn);
-      delay(50);
-      noTone(buzzer);
-      delay(500);
-    }
-    else
-    {
-      noTone(buzzer);
-    }
+  if (distance2 <= 7 && distance2 > 0)
+  {
+    tone(buzzer, tn);
+  }
+
+  else if (distance2 <= 13)
+  {
+    tone(buzzer, tn);
+    delay(50);
+    noTone(buzzer);
+    delay(250);
+  }
+
+  else if (distance2 <= 20)
+  {
+    tone(buzzer, tn);
+    delay(50);
+    noTone(buzzer);
+    delay(500);
+  }
+  else
+  {
+    noTone(buzzer);
+  }
 
 }
 int step = 1;
@@ -253,56 +226,88 @@ void stopNow() {
 }
 
 void parkCar() {
-/* the car turns right first , and then keeps moving backwards until it gets close to a wall,
-then turns left until and moves forward until it gets close to a wall. */
+  /* the car turns right first , and then keeps moving backwards until it gets close to a wall,
+    then turns left until and moves forward until it gets close to a wall. */
   if (step == 1) {
-//if (count < 10) {
-      turnBForwardandABackward();
-      delay(240);
-      stopNow();
-      step = 2;
-      delay(1000);
+    //if (count < 10) {
+    turnBForwardandABackward();
+    delay(240);
+    stopNow();
+    step = 2;
+    delay(1000);
 
   }
   if (step == 2) {
     BothBack();
     delay(575);
 
-   // if (distance2 <= 60 && distance2 > 0) {
-      stopNow();
-      delay(1000);
-      step = 3;
-   // }
+    // if (distance2 <= 60 && distance2 > 0) {
+    stopNow();
+    delay(1000);
+    step = 3;
+    // }
   }
   //}
-  
+
   if (step == 3) {
-//    if (count1 < 10) {
-      turnAForwardandBBackward();
-      delay(210);
-      stopNow();
-      step=4;
+    turnAForwardandBBackward();
+    delay(200);
+    stopNow();
+    step = 4;
   }
   if (step == 4) {
     BothForward();
     delay(200);
     stopNow();
 
-    step=5;
+    step = 5;
+  }
+}
+
+
+void parkCarOpposite() {
+  /* the car turns right first , and then keeps moving backwards until it gets close to a wall,
+    then turns left until and moves forward until it gets close to a wall. */
+  if (step == 1) {
+    //if (count < 10) {
+    turnAForwardandBBackward();
+    delay(240);
+    stopNow();
+    step = 2;
+    delay(1000);
+
+  }
+  if (step == 2) {
+    BothForward();
+    delay(575);
+    stopNow();
+    delay(1000);
+    step = 3;
   }
 
-
-
+  if (step == 3) {
+    turnBForwardandABackward();
+    delay(200);
+    stopNow();
+    step = 4;
+  }
+  if (step == 4) {
+    BothBack();
+    delay(200);
+    stopNow();
+    step = 5;
+  }
+  
 }
 
 
 
 
 void loop() {
-    ultrasonic1();
-    ultrasonic2();
-    parkCar();
-
+  //ultrasonic1();
+  //ultrasonic2();
+  //parkCar();
+  //parkCarOpposite();
 
 
 }
