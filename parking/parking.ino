@@ -15,7 +15,7 @@ int enB = 5;
 int in3 = 7;
 int in4 = 8;
 
-int wheelspeed = 255;
+int wheelspeed = 100;
 
 
 int tn = 4000;
@@ -53,6 +53,30 @@ void setup() {
 
   Serial.begin(9600);
 }
+
+void methodfrominternet(){
+  
+      if (distance2 > -1 && distance2 < 10) {
+      turnoffMotors();
+      delay(1000);
+    BothBack();
+      delay(300);
+      turnoffMotors();
+      delay(1000);
+  
+//      if (random(0, 2) == 0) {
+//        turnAForwardandBBackward();
+//      } else {
+        turnBForwardandABackward();
+//      }
+  
+      delay(500);
+      turnoffMotors();
+      delay(700);
+    } else {
+      BothForward();
+    }
+  }
 
 void turnBForwardandABackward()
 
@@ -153,42 +177,31 @@ void ultrasonic1() {
   Serial.println(distance);
 
 
-  if (distance > 0) {
-    ultrasonic1range = true;
 
-  }
-
-
-
-  //  if (distance <= 5)
-  //  {
-  //    tone(buzzer, tn);
-  //    movebackward = true;
-  //  }
-  //
-  //  else if (distance <= 10)
-  //  {
-  //    //digitalWrite(bled, HIGH);
-  //    movebackward = false;
-  //    tone(buzzer, tn);
-  //    delay(50);
-  //    noTone(buzzer);
-  //    delay(250);
-  //  }
-  //
-  ////  else if (distance <= 20)
-  //  {
-  //    movebackward = false;
-  //    tone(buzzer, tn);
-  //    delay(50);
-  //    noTone(buzzer);
-  //    delay(500);
-  //  }
-  //  else
-  //  {
-  //    movebackward = false;
-  //    noTone(buzzer);
-  //  }
+    if (distance <= 7 && distance> 0)
+    {
+      tone(buzzer, tn);
+    }
+  
+    else if (distance <= 13)
+    {
+      tone(buzzer, tn);
+      delay(50);
+      noTone(buzzer);
+      delay(250);
+    }
+  
+    else if (distance <= 20)
+    {
+      tone(buzzer, tn);
+      delay(50);
+      noTone(buzzer);
+      delay(500);
+    }
+    else
+    {
+      noTone(buzzer);
+    }
 }
 
 
@@ -202,10 +215,31 @@ void ultrasonic2() {
   Serial.print("u2 ");
   Serial.println(distance2);
 
-  if (distance2 > 0) {
-    ultrasonic2range = true;
 
-  }
+    if (distance2 <= 7 && distance2> 0)
+    {
+      tone(buzzer, tn);
+    }
+  
+    else if (distance2 <= 13)
+    {
+      tone(buzzer, tn);
+      delay(50);
+      noTone(buzzer);
+      delay(250);
+    }
+  
+    else if (distance2 <= 20)
+    {
+      tone(buzzer, tn);
+      delay(50);
+      noTone(buzzer);
+      delay(500);
+    }
+    else
+    {
+      noTone(buzzer);
+    }
 
 }
 int step = 1;
@@ -222,132 +256,53 @@ void parkCar() {
 /* the car turns right first , and then keeps moving backwards until it gets close to a wall,
 then turns left until and moves forward until it gets close to a wall. */
   if (step == 1) {
-    if (count < 50) {
+//if (count < 10) {
       turnBForwardandABackward();
-      count++;
-    }
-
-    if (count >= 50) {
-      step = 2;
+      delay(240);
       stopNow();
-      delay(200);
-    }
+      step = 2;
+      delay(1000);
+
   }
   if (step == 2) {
     BothBack();
-    if (distance2 <= 7 && distance2 >= 3) {
-      stopNow();
-      delay(200);
-      step = 3;
-    }
-  }
-  if (step == 3) {
-    if (count1 < 10) {
-      turnAForwardandBBackward();
-      count1++;
-    }
-    if (count1 >= 10) {
-      step = 4;
-      stopNow();
-      delay(200);
+    delay(575);
 
-    }
+   // if (distance2 <= 60 && distance2 > 0) {
+      stopNow();
+      delay(1000);
+      step = 3;
+   // }
+  }
+  //}
+  
+  if (step == 3) {
+//    if (count1 < 10) {
+      turnAForwardandBBackward();
+      delay(210);
+      stopNow();
+      step=4;
   }
   if (step == 4) {
     BothForward();
-    if (distance <= 7 && distance >= 3) {
-      stopNow();
-      delay(200);
-      step = 5;
-    }
+    delay(200);
+    stopNow();
 
+    step=5;
   }
+
+
 
 }
 
 
 
 
-
 void loop() {
-  // ultrasonic1();
     ultrasonic1();
-  parkCar();
-  ultrasonic2();
-  //  ultrasonic1();
-  // Serial.println("enters");
-  // int count=0;
-  //if(switchU==false){
-  // turnAForwardandBBackward();
-  // delay(200);
-  //  Serial.println("turns here");
-  //
-  // switchU=true;
-  // }
-  //
-  //  //Serial.println("turn here");
-  //
-  // Serial.println("out");
-  // BothForward();
-  // delay(100);
-  // //Serial.println("out");
+    ultrasonic2();
+    parkCar();
 
 
-  ////
-  ////  if (distance > -1 && distance < 25) {
-  ////    turnoffMotors();
-  ////    delay(1000);
-  // BothBack();
-  ////    delay(300);
-  ////    turnoffMotors();
-  ////    delay(1000);
-  ////
-  ////    if (random(0, 2) == 0) {
-  ////      turnAForwardandBBackward();
-  ////    } else {
-  ////      turnBForwardandABackward();
-  ////    }
-  ////
-  ////    delay(500);
-  ////    turnoffMotors();
-  ////    delay(700);
-  ////  } else {
-  ////    BothForward();
-  ////  }
-  //
-  //
-  //
-  //
-  //  if(!switchU){
-  //  turnBForwardandABackward();
-  //
-  //  if (distance2 > 0 && distance2 <= 13 ) {
-  //    if (distance2 > 8) {
-  //      BothBack();
-  //    }
-  //    else {
-  //     //offMotors();
-  //
-  //      switchU = true;
-  //
-  //
-  //    }
-  //
-  //  }
-  //}
-  //
-  //else
-  //{
-  //  turnAForwardandBBackward();
-  //  if (distance > 0 && distance <= 18 ) {
-  //    if (distance > 8) {
-  //      BothForward();
-  //    }
-  //    else {
-  //            switchU = false;
-  //      //turnoffMotors();
-  //    }
-  //
-  //  }
-  //}
+
 }
