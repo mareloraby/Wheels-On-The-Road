@@ -24,7 +24,7 @@ void mp3Setup() {
     Serial.println("OK");
 
     // Set volume to maximum (0 to 30).
-    player.volume(30);
+    player.volume(20);
     // Play the first MP3 file on the SD card
     //player.play(1);
   } else {
@@ -146,7 +146,7 @@ void sevenSegmentSetup() {
 //rainsensor and servo
 #include <Servo.h>
 Servo servo;
-int angle = 10;
+int angle = 42;
 int rainPin = A9;
 int thresholdValue = 800;
 
@@ -196,12 +196,13 @@ void setup(void) {
     NULL,             /* Parameter passed as input of the task */
     1,                /* Priority of the task. */
     NULL);            /* Task handle. */
+
 }
 
 void taskOne( void * pvParameter )
 {
   while (1) {
-    Serial.println("Task 1");
+    //Serial.println("Task 1");
     mp3andlcd();
   }
 }
@@ -209,7 +210,7 @@ void taskOne( void * pvParameter )
 void taskTwo( void * parameter)
 {
   while (1) {
-    Serial.println("Task 2");
+    // Serial.println("Task 2");
     levelsensor();
     delay(1000);
   }
@@ -218,7 +219,7 @@ void taskTwo( void * parameter)
 void taskThree( void * parameter)
 {
   while (1) {
-    Serial.println("Task 3");
+    // Serial.println("Task 3");
     rainSensor();
     delay(1000);
   }
@@ -227,8 +228,11 @@ void taskThree( void * parameter)
 
 
 
+int btnclick = 0; // 1 play  2 pause 3 next 4 prev
+bool nextclick = false;
 
 bool isPlaying = false;
+
 void mp3andlcd() {
   TSPoint p = ts.getPoint();       //checking if the user touched the screen
 
@@ -238,7 +242,6 @@ void mp3andlcd() {
   if (p.z > MINPRESSURE && p.z < MAXPRESSURE) { //p.z means the pressure value so if the touch wants to be detected
     // it pressure should be in this range (it's enough)
     p.x = map(p.x, TS_MINX, TS_MAXX, 0, tft.width());    //x and y positions of the touch so the program know the postion where the user has pressed
-
     p.y = map(p.y, TS_MINY, TS_MAXY, 0, tft.height());;
 
 
@@ -246,19 +249,20 @@ void mp3andlcd() {
       //tft.fillRect(0, 180, 300, 300, BLACK);          //The program will show red pressed, and that's how we create a touch button, the positions are from the rectangle values with a little addition
       //tft.setCursor(20, 180);
       //tft.setTextColor(WHITE);  tft.setTextSize(3);
-      player.previous();
       // tft.print("Prev");
 
+      if (isPlaying == true) {
+        player.previous();
+        Serial.println();
+        Serial.println(player.readCurrentFileNumber());
+      }
     }
 
     else if (p.x > 130 && p.x < 205 && p.y > 40 && p.y < 120) {
-      // tft.fillRect(0, 180, 300, 300, BLACK);          //We fill a little area so it's a partial cleaning of the screen
-      // tft.setCursor(0, 180);
-      // tft.setTextColor(WHITE);  tft.setTextSize(3);
+
       if (isPlaying == true ) {
         player.pause();
         isPlaying = false;
-        //tft.print("Paused");
       }
       else {
         if (isPlaying == false ) {
@@ -270,11 +274,17 @@ void mp3andlcd() {
 
     }
     else if (p.x > 220 &&  p.x < 300 && p.y > 40 && p.y < 120) {
+
       // tft.fillRect(0, 180, 300, 300, BLACK);          //We fill a little area so it's a partial cleaning of the screen
       // tft.setCursor(0, 180);
       //  tft.setTextColor(WHITE);  tft.setTextSize(3);
-      player.next();
       //  tft.print("Next");
+      if (isPlaying == true) {
+        player.next();
+        Serial.println();
+        Serial.println(player.readCurrentFileNumber());
+      }
+
     }
   }
 }
@@ -283,21 +293,20 @@ void mp3andlcd() {
 void levelsensor() {
   int level = readSensor();
   if (level == 0) {
-    Serial.println("Water Level: Empty");
   }
   else if (level > 0 && level <= lowerThreshold) {
-    Serial.println("Water Level: Low");
+    // Serial.println("Water Level: Low");
     sevseg.setNumber(0);
     sevseg.refreshDisplay();
   }
   else if (level > lowerThreshold && level <= upperThreshold) {
-    Serial.println("Water Level: Medium");
+    // Serial.println("Water Level: Medium");
 
     sevseg.setNumber(1);
     sevseg.refreshDisplay();
   }
   else if (level > upperThreshold) {
-    Serial.println("Water Level: High");
+    //   Serial.println("Water Level: High");
     sevseg.setNumber(2);
     sevseg.refreshDisplay();
   }
@@ -333,11 +342,11 @@ void rainSensor() {
   int sensorValue = analogRead(rainPin);
   Serial.print(sensorValue);
   if (sensorValue < thresholdValue) {
-    Serial.println(" - It's wet");
+    // Serial.println(" - It's wet");
     moveServo();
   }
   else {
-    Serial.println(" - It's dry");
+    //  Serial.println(" - It's dry");
   }
   delay(500);
 }
