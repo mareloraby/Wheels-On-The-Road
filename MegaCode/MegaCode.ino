@@ -154,7 +154,7 @@ void servoSetup() {
 
   //servo and rain
   pinMode(rainPin, INPUT);
-  servo.attach(31);
+  servo.attach(13);
   servo.write(angle);
 }
 
