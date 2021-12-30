@@ -1,6 +1,4 @@
 
-
-
 ## Brief Description of the implementation
 
 Implemented a RC with three modules: APA,FI and SS
@@ -60,7 +58,9 @@ Play/Pause.
 
 	Circuit designed using fritzing.com
  
+<img src="https://github.com/mareloraby/Wheels-On-The-Road/blob/main/MegaCode/mega_bb.jpg" />
 
+<img src="https://github.com/mareloraby/Wheels-On-The-Road/blob/main/parking/Uno_bb.jpg" />
 
 
 
@@ -81,7 +81,7 @@ Servo.h: This library allows an Arduino board to control RC (hobby) servo motors
 
 ## Prioritizing and dividing tasks using freeRTOS.
 
-	We divided the features between 2 microcontrollers; 3 on the Arduino Mega board (Rain detection and windshields, Fuel level, and sound system module  ) and 2 on the Arduino Uno board (DC motors control, obstacle detection and warning).
+We divided the features between 2 microcontrollers; 3 on the Arduino Mega board (Rain detection and windshields, Fuel level, and sound system module  ) and 2 on the Arduino Uno board (DC motors control, obstacle detection and warning).
 
 On the microcontroller on the uno board, we created 3 tasks: 1 continuous task for controlling the dc motors, and 2 periodic tasks for ultrasonic sensor readings, all having the same priority.
 ```
