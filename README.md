@@ -197,6 +197,10 @@ void taskThree( void * parameter)
 - Wires were loose and we resorted to welding, however that too went loose a few times. 
 - Dealt with dead batteries at first so we bought a rechargeable battery instead. 
 
-
+## Team members:
+- Hadeer ElHussein
+- Maryam ElOraby
+- Rawan Reda
+- Rowan Amgad
 ☺
 
