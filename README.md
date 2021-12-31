@@ -53,7 +53,7 @@ Play/Pause.
   - LDR module
   - LEDs (x2)
  
-
+ 
 ## The full project circuit
 
 	Circuit designed using fritzing.com
