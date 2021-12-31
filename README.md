@@ -189,6 +189,7 @@ void taskThree( void * parameter)
 }
 
 ```
+
 ## The problems or limitations faced during the implementation of the project
 
 - Not enough space was available on the car to integrate all the features, so we added another upper layer to the car. 
