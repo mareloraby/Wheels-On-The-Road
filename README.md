@@ -3,6 +3,7 @@
 
 Implemented a RC with three modules: APA,FI and SS
 
+
  - The APA ( Active Parking Assist) involved parking the car between two static objects and preventing it from colliding with other static objects. If a car is about to collide, a warning sound is produced. The tone varies with the distance between the car and the static object.
 We added two buttons to the module to control which direction (Rear or Front) the car should park.
 	
