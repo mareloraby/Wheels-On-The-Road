@@ -64,7 +64,6 @@ Play/Pause.
 
 
 
-
 ## The names of the libraries used and their functions
 - Libraries for LCD display:
   SPFD5408_Adafruit_GFX.h
