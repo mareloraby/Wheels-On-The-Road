@@ -138,6 +138,7 @@ void taskThree() {
 }
 
 ```
+
 On the microcontroller on the mega board, we created 3 tasks as well: 1 continuous task for controlling the lcd and mp3 player, and 2 periodic tasks: one for rain sensor reading and controlling the servo motor, and another for water level sensor reading and outputting to the 7 segment display, all having the same priority.
 
 ```
